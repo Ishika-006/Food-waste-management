@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { API_CONFIG } from 'src/app/config/api.config';
+
 
 export interface FoodDonation {
   fid: number;
@@ -26,8 +28,8 @@ export interface Feedback {
 })
 export class DonordashboardService {
 
-  private donationUrl = 'http://localhost:8080/donor';
-  private feedbackUrl = 'http://localhost:8080/feedbacks';
+  private donationUrl = `${API_CONFIG.baseUrl}/donor`;
+  private feedbackUrl = `${API_CONFIG.baseUrl}/feedbacks`;
 
   constructor(private http: HttpClient) {}
 

@@ -97,7 +97,7 @@ export class DonorDashboardComponent implements OnInit {
       this.router.navigate(['/feedback']); // Navigate to donation form
     }
     logout() {
-      this.http.post('http://localhost:8080/donor/custom-logout', {}, {
+      this.http.post('https://backend-01-live-food.onrender.com/donor/custom-logout', {}, {
         withCredentials: true, // To include session cookies
         responseType: 'text'   // To properly handle plain text response
       }).subscribe({
@@ -121,7 +121,7 @@ export class DonorDashboardComponent implements OnInit {
         localStorage.setItem('deliveryId', latestDelivery.fid.toString());
     
         // ✅ Fetch location before navigating
-        this.http.get<LocationDto>(`http://localhost:8080/donor/deliveries/${latestDelivery.fid}/location`, {
+        this.http.get<LocationDto>(`https://backend-01-live-food.onrender.com/donor/deliveries/${latestDelivery.fid}/location`, {
           withCredentials: true
         }).subscribe({
           next: location => {

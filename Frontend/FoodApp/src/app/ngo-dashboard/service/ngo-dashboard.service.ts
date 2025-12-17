@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { API_CONFIG } from 'src/app/config/api.config';
+
 export interface Donation {
   fid: number;
   name: string;
@@ -21,7 +23,7 @@ export interface Donation {
 })
 export class NgoDashboardService {
 
-  private baseUrl = 'http://localhost:8080/NGO';
+  private baseUrl = `${API_CONFIG.baseUrl}/NGO`;
 
   constructor(private http: HttpClient) {}
 

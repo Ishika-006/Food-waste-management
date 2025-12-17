@@ -178,3 +178,13 @@ button[type="submit"]:hover {
     font-size: 0.9rem;
   }
 }
+
+/* Dropdown spacing consistency */
+mat-select {
+  font-size: 0.95rem;
+}
+
+/* Option hover */
+.mat-option:hover {
+  background-color: #ede7f6;
+}

@@ -32,9 +32,20 @@ export class DonateComponent {
       quantity: [''],
       address: [''],
       location: [''],
-      date: [new Date().toISOString()] 
+      date: [this.getBackendCompatibleDate()]
     });
   }
+
+  getBackendCompatibleDate(): string {
+    // const d = new Date();
+    // const pad = (n: number) => n.toString().padStart(2, '0');
+
+    // return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T` +
+    //        `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}+05:30`;
+
+    return '2025-01-15T10:30:00+05:30';
+  }
+
 
   onImageSelected(event: any) {
     this.selectedImage = event.target.files[0];
@@ -74,24 +85,34 @@ export class DonateComponent {
       return;
     }
   
+    if (!this.selectedImage) {
+      alert('Please upload image');
+      return;
+    }
+  
     const formData = new FormData();
+  
     Object.entries(this.donationForm.value).forEach(([key, value]) => {
-      formData.append(key, value as string);
+      if (value !== null && value !== undefined) {
+        formData.append(key, value as any);
+      }
     });
   
-    if (this.selectedImage) {
-      formData.append('image', this.selectedImage);
-    }
+    // ✅ SAFE NOW
+    formData.append('image', this.selectedImage);
   
     this.donationService.submitDonation(formData).subscribe({
       next: () => {
         alert('Thanks for donating!');
-        this.donationForm.reset();
+        this.donationForm.reset({
+          date: this.getBackendCompatibleDate()
+        });
+        this.selectedImage = null;
         this.predictionResult = null;
       },
-      error: (err) => {
+      error: () => {
         alert('Something went wrong!');
       }
     });
-  }  
-}
+  }
+}  

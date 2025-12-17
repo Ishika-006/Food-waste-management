@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { API_CONFIG } from '../config/api.config';
+
 
 export interface UserFeedback {
   name: string;
@@ -18,7 +20,7 @@ export interface UserFeedback {
   providedIn: 'root'
 })
 export class FeedbackService {
-  private baseUrl = 'http://localhost:8080/feedbacks';  // Backend URL
+  private baseUrl = `${API_CONFIG.baseUrl}/feedbacks`;  // Backend URL
 
   constructor(private http: HttpClient) { }
 

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import emailjs from '@emailjs/browser';
 
 @Component({
   selector: 'app-contact-us',
@@ -24,9 +25,18 @@ export class ContactUsComponent {
 
   onSubmit() {
     if (this.contactForm.valid) {
-      console.log('Form Data:', this.contactForm.value);
-      alert('Message sent successfully!');
-      this.contactForm.reset();
+      emailjs.send(
+        'service_8r4zy1v',
+        'template_cahg03g',
+        this.contactForm.value,
+        'yBmE_EU9lg-NEnYb3'
+      ).then(() => {
+        alert('Message sent successfully!');
+        this.contactForm.reset();
+      }, (err) => {
+        alert('Failed to send message.');
+        console.error(err);
+      });
     } else {
       alert('Please fill out all required fields.');
     }

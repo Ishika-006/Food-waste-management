@@ -1,13 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { API_CONFIG } from 'src/app/config/api.config';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContributeService {
 
-  private baseUrl = 'http://localhost:8080/donor';
+  private baseUrl = `${API_CONFIG.baseUrl}/donor`;
 
   constructor(private http: HttpClient) {}
 

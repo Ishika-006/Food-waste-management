@@ -1,26 +1,31 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { API_CONFIG } from 'src/app/config/api.config';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
 
-  private baseUrl = 'http://localhost:8080/admin'; // Spring Boot backend URL
+  private baseUrl = `${API_CONFIG.baseUrl}/admin`; // Spring Boot backend URL
 
   constructor(private http: HttpClient) {}
 
   // Login donor using email and password as query params
   loginAdmin(email: string, password: string) {
-    const params = new HttpParams()
-      .set('email', email)
-      .set('password', password);
-    return this.http.post(`${this.baseUrl}/login`, null, { params, withCredentials: true });
+    return this.http.post(
+      `${this.baseUrl}/login`,
+      { email, password },
+      { withCredentials: true }
+    );
   }
 
   // Register new donor with full object
   registerAdmin(donorData: any) {
-    return this.http.post(`${this.baseUrl}/register`, donorData);
+    return this.http.post(`${this.baseUrl}/register`, donorData, {
+      withCredentials: true   // ✅ safe to keep true
+    });
   }
 
       

@@ -1,14 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SellService } from '../../service/sell.service';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-sell',
   templateUrl: './sell.component.html',
   styleUrls: ['./sell.component.css']
 })
-export class SellComponent {
+export class SellComponent implements OnInit {
+
   sellForm!: FormGroup;
   selectedImage: File | null = null;
   predictionResult: string | null = null;
@@ -32,8 +33,12 @@ export class SellComponent {
       price: [''],
       address: [''],
       location: [''],
-      date: [new Date().toISOString()] 
+      date: [this.getBackendCompatibleDate()]
     });
+  }
+
+  getBackendCompatibleDate(): string {
+    return '2025-01-15T10:30:00+05:30';
   }
 
   onImageSelected(event: any) {
@@ -48,19 +53,18 @@ export class SellComponent {
     this.predictionResult = null;
 
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append('file', file);
 
-    const apiUrl = `https://detect.roboflow.com/donate-jslwt/2?api_key=j0FrsE52GpFxipdX1Rmc`;
+    const apiUrl =
+      'https://detect.roboflow.com/donate-jslwt/2?api_key=j0FrsE52GpFxipdX1Rmc';
 
     this.http.post(apiUrl, formData).subscribe({
       next: (res: any) => {
-        console.log("Prediction:", res);
         this.predictionResult = res.predictions?.[0]?.class || 'Unknown';
         this.loadingPrediction = false;
       },
-      error: (err) => {
-        console.error("Prediction error", err);
-        this.predictionResult = "Error getting prediction";
+      error: () => {
+        this.predictionResult = 'Error';
         this.loadingPrediction = false;
       }
     });
@@ -72,23 +76,32 @@ export class SellComponent {
       return;
     }
 
-    const formData = new FormData();
-    Object.entries(this.sellForm.value).forEach(([key, value]) => {
-      formData.append(key, value as string);
-    });
-
-    if (this.selectedImage) {
-      formData.append('image', this.selectedImage);
+    if (!this.selectedImage) {
+      alert('Please upload image');
+      return;
     }
 
+    const formData = new FormData();
+
+    Object.entries(this.sellForm.value).forEach(([key, value]) => {
+      if (value !== null && value !== undefined) {
+        formData.append(key, value as any);
+      }
+    });
+
+    formData.append('image', this.selectedImage);
+
     this.sellService.submitSell(formData).subscribe({
-      next: (res) => {
+      next: () => {
         alert('Food item listed for sale successfully!');
-        this.sellForm.reset();
+        this.sellForm.reset({
+          date: this.getBackendCompatibleDate()
+        });
+        this.selectedImage = null;
         this.predictionResult = null;
       },
-      error: (err: HttpErrorResponse) => {
-        if (err.status === 401) {
+      error: (err) => {
+        if (err.status === 401 || err.status === 403) {
           alert('You must be logged in to sell.');
         } else {
           alert('Something went wrong!');

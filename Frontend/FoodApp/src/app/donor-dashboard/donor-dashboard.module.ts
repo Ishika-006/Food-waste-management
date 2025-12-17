@@ -17,6 +17,7 @@ import { DonorDashboardRoutingModule } from "./donor-dashboard-rounting.module";
 import { ContributionComponent } from "./components/contribution/contribution.component";
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSelectModule } from "@angular/material/select";
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     MatListModule,
     MatProgressBarModule,
     MatSidenavModule,
+    MatSelectModule
     
   ]
 })

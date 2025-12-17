@@ -1,13 +1,16 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { API_CONFIG } from 'src/app/config/api.config';
+
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdmindashboardService {
 
-  private baseUrl = 'http://localhost:8080/admin' // Backend base path
+  private baseUrl = `${API_CONFIG.baseUrl}/admin`; // Backend base path
 
   constructor(private http: HttpClient) {}
   getTotalDonations(): Observable<number> {

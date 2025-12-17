@@ -96,7 +96,7 @@ export class DeliveryDashboardComponent {
   }
 
   logout() {
-    this.http.post('http://localhost:8080/delivery/custom-logout', {}, {
+    this.http.post('https://backend-01-live-food.onrender.com/delivery/custom-logout', {}, {
       withCredentials: true, // To include session cookies
       responseType: 'text'   // To properly handle plain text response
     }).subscribe({

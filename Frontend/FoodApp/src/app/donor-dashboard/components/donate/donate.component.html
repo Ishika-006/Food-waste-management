@@ -28,11 +28,24 @@
         <mat-label>Food Item</mat-label>
         <input matInput formControlName="food" required>
       </mat-form-field>
+<!-- Type Dropdown -->
+<mat-form-field appearance="fill">
+  <mat-label>Type</mat-label>
+  <mat-select formControlName="type" required>
+    <mat-option value="raw">Raw</mat-option>
+    <mat-option value="baked">Baked</mat-option>
+  </mat-select>
+</mat-form-field>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Type</mat-label>
-        <input matInput formControlName="type">
-      </mat-form-field>
+<!-- Category Dropdown -->
+<mat-form-field appearance="fill">
+  <mat-label>Category</mat-label>
+  <mat-select formControlName="category" required>
+    <mat-option value="veg">Veg</mat-option>
+    <mat-option value="non-veg">Non-Veg</mat-option>
+  </mat-select>
+</mat-form-field>
+
 
       <mat-form-field appearance="fill">
         <mat-label>Category</mat-label>

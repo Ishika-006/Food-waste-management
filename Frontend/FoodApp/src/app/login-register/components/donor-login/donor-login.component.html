@@ -2,74 +2,88 @@
   <div class="login-overlay"></div>
   <div class="login-form">
     <h2 class="login-title">
-      {{ isForgotPasswordMode 
-          ? 'Reset Password' 
-          : (isLoginMode ? 'Donor Login' : 'Donor Registration') }}
+      {{ isForgotPasswordMode ? 'Reset Password' : (isLoginMode ? 'Donor Login' : 'Donor Registration') }}
     </h2>
 
-    <form (ngSubmit)="onSubmit()" #donorForm="ngForm" novalidate>
+    <form (ngSubmit)="onSubmit()">
 
-      <!-- LOGIN / REGISTER FORM -->
+      <!-- LOGIN / REGISTER -->
       <ng-container *ngIf="!isForgotPasswordMode">
 
-        <!-- Login Form -->
+        <!-- Login -->
         <ng-container *ngIf="isLoginMode">
           <div class="mat-form-field">
-            <input type="email" name="loginEmail" [(ngModel)]="loginData.email" placeholder="Email" required />
+            <input type="email" [(ngModel)]="loginData.email" name="loginEmail" placeholder="Email"
+                   (ngModelChange)="onLoginChange('email')" />
+            <small class="error">{{ fieldErrors.loginEmail }}</small>
           </div>
           <div class="mat-form-field">
-            <input type="password" name="loginPassword" [(ngModel)]="loginData.password" placeholder="Password" required />
+            <input type="password" [(ngModel)]="loginData.password" name="loginPassword" placeholder="Password"
+                   (ngModelChange)="onLoginChange('password')" />
+            <small class="error">{{ fieldErrors.loginPassword }}</small>
           </div>
         </ng-container>
 
-        <!-- Register Form -->
+        <!-- Register -->
         <ng-container *ngIf="!isLoginMode">
           <div class="mat-form-field">
-            <input type="text" name="name" [(ngModel)]="registerData.name" placeholder="Full Name" required />
+            <input type="text" [(ngModel)]="registerData.name" name="name" placeholder="Full Name"
+                   (ngModelChange)="onRegisterChange('name')" />
+            <small class="error">{{ fieldErrors.name }}</small>
           </div>
           <div class="mat-form-field">
-            <input type="email" name="email" [(ngModel)]="registerData.email" placeholder="Email" required />
+            <input type="email" [(ngModel)]="registerData.email" name="email" placeholder="Email"
+                   (ngModelChange)="onRegisterChange('email')" />
+            <small class="error">{{ fieldErrors.email }}</small>
           </div>
           <div class="mat-form-field">
-            <input type="password" name="password" [(ngModel)]="registerData.password" placeholder="Password" required />
+            <input type="password" [(ngModel)]="registerData.password" name="password" placeholder="Password"
+                   (ngModelChange)="onRegisterChange('password')" />
+            <small class="error">{{ fieldErrors.password }}</small>
           </div>
           <div class="mat-form-field">
-            <input type="text" name="contact" [(ngModel)]="registerData.contact" placeholder="Contact Number" required />
+            <input type="text" [(ngModel)]="registerData.contact" name="contact" placeholder="Contact"
+                   (ngModelChange)="onRegisterChange('contact')" />
+            <small class="error">{{ fieldErrors.contact }}</small>
           </div>
           <div class="mat-form-field">
-            <input type="text" name="address" [(ngModel)]="registerData.address" placeholder="Address" required />
+            <input type="text" [(ngModel)]="registerData.address" name="address" placeholder="Address"
+                   (ngModelChange)="onRegisterChange('address')" />
+            <small class="error">{{ fieldErrors.address }}</small>
           </div>
           <div class="mat-form-field">
-            <select name="donorType" [(ngModel)]="registerData.donorType" required>
+            <select [(ngModel)]="registerData.donorType" name="donorType"
+                    (ngModelChange)="onRegisterChange('donorType')">
               <option value="" disabled selected>Select Donor Type</option>
               <option value="Individual">Individual</option>
               <option value="Organization">Organization</option>
             </select>
+            <small class="error">{{ fieldErrors.donorType }}</small>
           </div>
         </ng-container>
 
-        <!-- Error Message -->
-        <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
-
-        <!-- Submit Button -->
         <div class="mat-form-field">
           <button type="submit" class="login-btn">{{ isLoginMode ? 'Login' : 'Register' }}</button>
         </div>
 
-        <!-- Footer Buttons -->
         <div class="login-footer">
           <button type="button" class="login-btn" (click)="toggleMode()">Switch to {{ isLoginMode ? 'Register' : 'Login' }}</button>
           <button type="button" class="link-btn" (click)="showForgotPassword()">Forgot Password?</button>
         </div>
+
       </ng-container>
 
-      <!-- FORGOT PASSWORD FORM -->
+      <!-- Forgot Password -->
       <ng-container *ngIf="isForgotPasswordMode">
         <div class="mat-form-field">
-          <input type="email" name="forgotEmail" [(ngModel)]="forgotEmail" placeholder="Enter your registered email" required />
+          <input type="email" [(ngModel)]="forgotEmail" name="forgotEmail" placeholder="Enter registered email"
+                 (ngModelChange)="onForgotChange('forgotEmail')" />
+          <small class="error">{{ fieldErrors.forgotEmail }}</small>
         </div>
         <div class="mat-form-field" *ngIf="emailVerified">
-          <input type="password" name="newPassword" [(ngModel)]="newPassword" placeholder="Enter new password" required />
+          <input type="password" [(ngModel)]="newPassword" name="newPassword" placeholder="Enter new password"
+                 (ngModelChange)="onForgotChange('newPassword')" />
+          <small class="error">{{ fieldErrors.newPassword }}</small>
         </div>
 
         <div class="mat-form-field">

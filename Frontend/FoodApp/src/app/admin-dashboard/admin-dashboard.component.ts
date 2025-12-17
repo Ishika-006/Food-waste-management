@@ -28,7 +28,7 @@ export class AdminDashboardComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private dashboardService: AdmindashboardService
+    private dashboardService: AdmindashboardService,private http: HttpClient
   ) {}
 
   ngOnInit(): void {
@@ -110,10 +110,13 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   logout(): void {
-    this.dashboardService.logout().subscribe({
+    this.http.post('https://backend-01-live-food.onrender.com/admin/custom-logout', {}, {
+      withCredentials: true, // To include session cookies
+      responseType: 'text'   // To properly handle plain text response
+    }).subscribe({
       next: (response) => {
-        alert(response);
-        this.router.navigate(['/home']);
+        alert(response); // Show success message
+        this.router.navigate(['/home']); // Navigate to login or home page
       },
       error: (err) => {
         alert('Logout failed: ' + err.error);

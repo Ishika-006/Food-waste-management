@@ -1,12 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { API_CONFIG } from 'src/app/config/api.config';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class DeliveryService {
 
-  private baseUrl = 'http://localhost:8080/delivery' // Backend base path
+  private baseUrl = `${API_CONFIG.baseUrl}/delivery`; // Backend base path
 
   constructor(private http: HttpClient) {}
   getUnassignedOrders() {

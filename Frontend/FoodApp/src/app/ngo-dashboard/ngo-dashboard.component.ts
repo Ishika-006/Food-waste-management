@@ -93,7 +93,7 @@ export class NgoDashboardComponent  implements OnInit{
       return `${hours} hour${hours > 1 ? 's' : ''} ago`;
     }
   logout() {
-    this.http.post('http://localhost:8080/NGO/custom-logout', {}, {
+    this.http.post('https://backend-01-live-food.onrender.com/NGO/custom-logout', {}, {
       withCredentials: true, // To include session cookies
       responseType: 'text'   // To properly handle plain text response
     }).subscribe({
@@ -108,7 +108,7 @@ export class NgoDashboardComponent  implements OnInit{
   }
 
   getDeliveryLocation(fid: number): void {
-    this.http.get<LocationDto>(`http://localhost:8080/donor/deliveries/${fid}/location`, { withCredentials: true })
+    this.http.get<LocationDto>(`https://backend-01-live-food.onrender.com/donor/deliveries/${fid}/location`, { withCredentials: true })
       .subscribe({
         next: location => {
           console.log("📍 Location:", location);
@@ -131,7 +131,7 @@ export class NgoDashboardComponent  implements OnInit{
       localStorage.setItem('deliveryId', latestDelivery.fid.toString());
   
       // ✅ Fetch location before navigating
-      this.http.get<LocationDto>(`http://localhost:8080/donor/deliveries/${latestDelivery.fid}/location`, {
+      this.http.get<LocationDto>(`https://backend-01-live-food.onrender.com/donor/deliveries/${latestDelivery.fid}/location`, {
         withCredentials: true
       }).subscribe({
         next: location => {

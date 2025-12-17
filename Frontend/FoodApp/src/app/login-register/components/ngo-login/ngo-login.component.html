@@ -2,44 +2,80 @@
   <div class="login-overlay"></div>
   <div class="login-form">
     <h2 class="login-title">
-      {{ isForgotPasswordMode 
-          ? 'Reset Password' 
-          : (isLoginMode ? 'NGO Login' : 'NGO Registration') }}
+      {{ isForgotPasswordMode ? 'Reset Password' : (isLoginMode ? 'NGO Login' : 'NGO Registration') }}
     </h2>
 
-    <form (ngSubmit)="onSubmit()" #ngoForm="ngForm" novalidate>
+    <form (ngSubmit)="onSubmit()">
 
-      <!-- LOGIN / REGISTER FORM -->
+      <!-- Login / Register -->
       <ng-container *ngIf="!isForgotPasswordMode">
 
-        <!-- Login Form -->
+        <!-- Login -->
         <ng-container *ngIf="isLoginMode">
           <div class="mat-form-field">
-            <input type="email" name="loginEmail" [(ngModel)]="loginData.email" placeholder="Email" required />
+            <input type="email" [(ngModel)]="loginData.email" name="loginEmail" placeholder="Email" />
+            <small class="error">{{ fieldErrors.loginEmail }}</small>
           </div>
           <div class="mat-form-field">
-            <input type="password" name="loginPassword" [(ngModel)]="loginData.password" placeholder="Password" required />
+            <input type="password" [(ngModel)]="loginData.password" name="loginPassword" placeholder="Password" />
+            <small class="error">{{ fieldErrors.loginPassword }}</small>
           </div>
         </ng-container>
 
-        <!-- Register Form -->
+        <!-- Register -->
         <ng-container *ngIf="!isLoginMode">
-          <div class="mat-form-field"><input type="text" name="name" [(ngModel)]="registerData.name" placeholder="NGO Name" required /></div>
-          <div class="mat-form-field"><input type="text" name="registrationNumber" [(ngModel)]="registerData.registrationNumber" placeholder="Registration Number" required /></div>
-          <div class="mat-form-field"><input type="email" name="email" [(ngModel)]="registerData.email" placeholder="Email" required /></div>
-          <div class="mat-form-field"><input type="password" name="password" [(ngModel)]="registerData.password" placeholder="Password" required /></div>
-          <div class="mat-form-field"><input type="text" name="contactNumber" [(ngModel)]="registerData.contactNumber" placeholder="Contact Number" required /></div>
-          <div class="mat-form-field"><input type="text" name="address" [(ngModel)]="registerData.address" placeholder="Address" required /></div>
-          <div class="mat-form-field"><input type="text" name="city" [(ngModel)]="registerData.city" placeholder="City" required /></div>
-          <div class="mat-form-field"><input type="text" name="state" [(ngModel)]="registerData.state" placeholder="State" required /></div>
-          <div class="mat-form-field"><input type="text" name="country" [(ngModel)]="registerData.country" placeholder="Country" required /></div>
-          <div class="mat-form-field"><input type="text" name="website" [(ngModel)]="registerData.website" placeholder="Website" /></div>
-          <div class="mat-form-field"><input type="text" name="typeOfWork" [(ngModel)]="registerData.typeOfWork" placeholder="Type of Work" required /></div>
-          <div class="mat-form-field"><input type="text" name="founderName" [(ngModel)]="registerData.founderName" placeholder="Founder's Name" required /></div>
-          <div class="mat-form-field"><input type="number" name="yearOfEstablishment" [(ngModel)]="registerData.yearOfEstablishment" placeholder="Year of Establishment" required /></div>
+          <div class="mat-form-field">
+            <input type="text" [(ngModel)]="registerData.name" name="name" placeholder="NGO Name" />
+            <small class="error">{{ fieldErrors.name }}</small>
+          </div>
+          <div class="mat-form-field">
+            <input type="text" [(ngModel)]="registerData.registrationNumber" name="registrationNumber" placeholder="Registration Number" />
+            <small class="error">{{ fieldErrors.registrationNumber }}</small>
+          </div>
+          <div class="mat-form-field">
+            <input type="email" [(ngModel)]="registerData.email" name="email" placeholder="Email" />
+            <small class="error">{{ fieldErrors.email }}</small>
+          </div>
+          <div class="mat-form-field">
+            <input type="password" [(ngModel)]="registerData.password" name="password" placeholder="Password" />
+            <small class="error">{{ fieldErrors.password }}</small>
+          </div>
+          <div class="mat-form-field">
+            <input type="text" [(ngModel)]="registerData.contactNumber" name="contactNumber" placeholder="Contact Number" />
+            <small class="error">{{ fieldErrors.contactNumber }}</small>
+          </div>
+          <div class="mat-form-field">
+            <input type="text" [(ngModel)]="registerData.address" name="address" placeholder="Address" />
+            <small class="error">{{ fieldErrors.address }}</small>
+          </div>
+          <div class="mat-form-field">
+            <input type="text" [(ngModel)]="registerData.city" name="city" placeholder="City" />
+            <small class="error">{{ fieldErrors.city }}</small>
+          </div>
+          <div class="mat-form-field">
+            <input type="text" [(ngModel)]="registerData.state" name="state" placeholder="State" />
+            <small class="error">{{ fieldErrors.state }}</small>
+          </div>
+          <div class="mat-form-field">
+            <input type="text" [(ngModel)]="registerData.country" name="country" placeholder="Country" />
+            <small class="error">{{ fieldErrors.country }}</small>
+          </div>
+          <div class="mat-form-field">
+            <input type="text" [(ngModel)]="registerData.website" name="website" placeholder="Website" />
+          </div>
+          <div class="mat-form-field">
+            <input type="text" [(ngModel)]="registerData.typeOfWork" name="typeOfWork" placeholder="Type of Work" />
+            <small class="error">{{ fieldErrors.typeOfWork }}</small>
+          </div>
+          <div class="mat-form-field">
+            <input type="text" [(ngModel)]="registerData.founderName" name="founderName" placeholder="Founder's Name" />
+            <small class="error">{{ fieldErrors.founderName }}</small>
+          </div>
+          <div class="mat-form-field">
+            <input type="text" [(ngModel)]="registerData.yearOfEstablishment" name="yearOfEstablishment" placeholder="Year of Establishment" />
+            <small class="error">{{ fieldErrors.yearOfEstablishment }}</small>
+          </div>
         </ng-container>
-
-        <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
 
         <div class="mat-form-field">
           <button type="submit" class="login-btn">{{ isLoginMode ? 'Login' : 'Register' }}</button>
@@ -47,18 +83,20 @@
 
         <div class="login-footer">
           <button type="button" class="login-btn" (click)="toggleMode()">Switch to {{ isLoginMode ? 'Register' : 'Login' }}</button>
-          <button type="button" class="login-btn" (click)="showForgotPassword()">Forgot Password?</button> <!-- ✅ Fixed here -->
+          <button type="button" class="login-btn" (click)="showForgotPassword()">Forgot Password?</button>
         </div>
 
       </ng-container>
 
-      <!-- FORGOT PASSWORD FORM -->
+      <!-- Forgot Password -->
       <ng-container *ngIf="isForgotPasswordMode">
         <div class="mat-form-field">
-          <input type="email" name="forgotEmail" [(ngModel)]="forgotEmail" placeholder="Enter your registered email" required />
+          <input type="email" [(ngModel)]="forgotEmail" name="forgotEmail" placeholder="Enter your registered email" />
+          <small class="error">{{ fieldErrors.forgotEmail }}</small>
         </div>
         <div class="mat-form-field" *ngIf="emailVerified">
-          <input type="password" name="newPassword" [(ngModel)]="newPassword" placeholder="Enter new password" required />
+          <input type="password" [(ngModel)]="newPassword" name="newPassword" placeholder="Enter new password" />
+          <small class="error">{{ fieldErrors.newPassword }}</small>
         </div>
 
         <div class="mat-form-field">
