@@ -12,7 +12,7 @@ The Food Donation Website is a platform designed to reduce food wastage by conne
 
 - **Donor:** Can donate or sell food. Food freshness is verified through an ML model.
 - **NGO:** Reviews and accepts donated food.
-- **Delivery Man (Volunteer):** Picks up food from donor and delivers it to NGO; delivery is trackable on a map.
+- **Delivery Man (Volunteer):** Picks up food from donor and delivers it to NGO; delivery is trackable on a map(in future).
 - **Admin:** Manages users and views monthly reports, graphs, and charts on food donations and deliveries.
 
 ---
@@ -31,20 +31,15 @@ The Food Donation Website is a platform designed to reduce food wastage by conne
 
 ## Security Features
 
-Session-Based Authentication
-Secure login system using HTTPS sessions 
+- Session-Based Authentication :Secure login system using HTTPS sessions 
 
-Password Hashing
-Passwords encrypted using BCrypt
+- Password Hashing : Passwords encrypted using BCrypt
 
-CORS Protection
-Configured to allow only authorized frontend access
+- CORS Protection : Configured to allow only authorized frontend access
 
-Input Validation
-All user inputs are validated and sanitized
+- Input Validation : All user inputs are validated and sanitized
 
-API Key Protection
-API keys (Roboflow, EmailJS) are not exposed or logged in console
+- API Key Protection : API keys (Roboflow, EmailJS) are not exposed or logged in console
 
 ---
 
@@ -76,7 +71,6 @@ All working demo videos (role-wise flow, ML detection, delivery tracking, admin 
 ## Installation & Running Locally
 🌐 Live Deployment
 
-Frontend (Netlify):
 👉 **Frontend** : https://foodwaste13-frontend.netlify.app/
 
 👉**Backend API** (Render): https://backend-01-live-food.onrender.com
